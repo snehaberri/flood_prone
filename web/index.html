@@ -152,13 +152,65 @@ $('rain-mode').onchange = e=>{
   $('fc-wrap').style.display  = man?'none':'block';
 };
 
+// ---------- reverse geocoding ----------
+async function getPlaceName(lat, lon) {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+    );
+
+    if (!res.ok) throw new Error('Geocoding failed');
+
+    const data = await res.json();
+
+    // Try to get a useful human-readable place name
+    const a = data.address || {};
+
+    return (
+      a.road ||
+      a.neighbourhood ||
+      a.suburb ||
+      a.city_district ||
+      a.city ||
+      data.display_name ||
+      `${lat.toFixed(4)}, ${lon.toFixed(4)}`
+    );
+  } catch (err) {
+    console.error('Reverse geocoding error:', err);
+    return `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  }
+}
+
 /* ---------- picking points ---------- */
-map.on('click', e=>{
-  const ll=[e.latlng.lat, e.latlng.lng];
-  if(!origin){ origin=ll; addMarker(ll,'var(--safe)'); $('o-lab').textContent=ll.map(v=>v.toFixed(4)).join(', '); $('o-lab').classList.remove('muted'); }
-  else if(!dest){ dest=ll; addMarker(ll,'#ff6b6b'); $('d-lab').textContent=ll.map(v=>v.toFixed(4)).join(', '); $('d-lab').classList.remove('muted'); }
-  $('go').disabled = !(origin&&dest);
+map.on('click', async e => {
+  const ll = [e.latlng.lat, e.latlng.lng];
+
+  if (!origin) {
+    origin = ll;
+
+    addMarker(ll, 'var(--safe)');
+
+    $('o-lab').textContent = 'Finding location…';
+    $('o-lab').classList.remove('muted');
+
+    const place = await getPlaceName(ll[0], ll[1]);
+    $('o-lab').textContent = place;
+
+  } else if (!dest) {
+    dest = ll;
+
+    addMarker(ll, '#ff6b6b');
+
+    $('d-lab').textContent = 'Finding location…';
+    $('d-lab').classList.remove('muted');
+
+    const place = await getPlaceName(ll[0], ll[1]);
+    $('d-lab').textContent = place;
+  }
+
+  $('go').disabled = !(origin && dest);
 });
+
 function addMarker(ll,color){
   markers.push(L.circleMarker(ll,{radius:7,color:'#fff',weight:2,fillColor:color,fillOpacity:1}).addTo(map));
 }
