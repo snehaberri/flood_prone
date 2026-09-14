@@ -1,0 +1,12 @@
+{
+  "n_flood_prone": 70,
+  "n_controls": 400,
+  "n_lowlying_excluded": 126,
+  "radius_m": 300.0,
+  "auc_p90": 0.6690714285714285,
+  "auc_median": 0.6042142857142857,
+  "flood_prone_in_top_quintile": 0.8142857142857143,
+  "control_in_top_quintile": 0.6575,
+  "lowlying_auc_circular_do_not_quote": 0.6321329365079366,
+  "caveat": "Undated point locations. Sanity check, not a model accuracy. Low-lying points excluded from scoring as circular."
+}

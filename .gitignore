@@ -1,0 +1,21 @@
+# Regenerable pipeline outputs. The DEM mosaic, hydrology rasters and OSM dumps
+# are ~300 MB and rebuild from scratch with `python run_all.py`.
+data/raw/cop30_*.tif
+data/raw/osm_*.json
+data/processed/*.tif
+data/processed/*.parquet
+data/processed/rainfall.json
+data/processed/checkset.json
+data/processed/model_meta.json
+data/processed/validation.csv
+data/processed/validation.json
+
+# validation_bbmp.* IS tracked on purpose: it is the evidence behind the AUC figures
+# quoted in the README, it is small, and it does not reproduce without a full
+# pipeline run. Everything else under data/processed is regenerable output.
+data/processed/supervised_model.joblib
+
+__pycache__/
+*.pyc
+*.log
+.Rhistory
