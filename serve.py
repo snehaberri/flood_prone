@@ -130,10 +130,10 @@ class Handler(BaseHTTPRequestHandler):
 def main(port=8000):
     print("  loading graph ...", flush=True)
     router()
-    srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    srv = ThreadingHTTPServer(("0.0.0.0", port), Handler)
     # flush: serve_forever() blocks immediately after this, so an unflushed line
     # sits in the buffer and anything tailing the log never sees the server come up.
-    print(f"\n  ready -> http://127.0.0.1:{port}\n  ctrl-c to stop", flush=True)
+    print(f"\n  ready -> http://0.0.0.0:{port}\n  ctrl-c to stop", flush=True)
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
