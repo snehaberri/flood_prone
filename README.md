@@ -7,7 +7,7 @@ negotiation is required.
 ```bash
 pip install numpy pandas scipy rasterio geopandas shapely pyproj scikit-learn pyarrow
 python run_all.py          # full pipeline, ~30-60 min on a cold start
-python serve.py            # then open http://127.0.0.1:8000
+python serve.py            # then open http://0.0.0.0:8000
 ```
 
 The pipeline caches every download, so re-runs are cheap and an interrupted run resumes
