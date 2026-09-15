@@ -1,0 +1,17 @@
+{
+  "n_flood_prone": 30,
+  "n_control": 10,
+  "radius_m": 500.0,
+  "drainage_agreement": {
+    "tolerance_m": 60.0,
+    "osm_drain_cells": 216686,
+    "matched": 0.7308224804555901,
+    "chance": 0.32976008083517994,
+    "lift": 2.2162248341419724
+  },
+  "auc_p90": 0.66,
+  "auc_median": 0.7633333333333333,
+  "flood_prone_in_top_quintile": 0.8333333333333334,
+  "control_in_top_quintile": 0.5,
+  "caveat": "Sanity check on a small, undated, centroid-precision check-set. NOT a model accuracy. Weights were fixed before this ran."
+}

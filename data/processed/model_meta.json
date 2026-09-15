@@ -1,0 +1,24 @@
+{
+  "weights": {
+    "hand": 0.25,
+    "sink_depth": 0.22,
+    "twi": 0.18,
+    "slope": 0.15,
+    "dist_drain": 0.12,
+    "flowacc": 0.08
+  },
+  "scales": {
+    "hand_scale_m": 8.0,
+    "slope_flat_deg": 3.0,
+    "drain_near_m": 150.0,
+    "sink_cap_m": 1.5
+  },
+  "impassable_risk": 0.6,
+  "sensitivity": {
+    "mean_rank_corr": 0.996229291718792,
+    "worst_rank_corr": 0.9850516442021253,
+    "top5pct_retained": 0.9445923741310301
+  },
+  "n_edges": 284827,
+  "note": "Weighted-overlay index with a priori weights. Not a fitted model; no accuracy is claimed. See module docstring."
+}

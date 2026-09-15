@@ -12,6 +12,7 @@ Endpoints
     GET /api/route?o=lat,lon&d=lat,lon&trigger=0.8
 """
 import json
+import os
 import sys
 import threading
 import urllib.parse
@@ -127,13 +128,16 @@ class Handler(BaseHTTPRequestHandler):
             return self._fail(500, f"{type(e).__name__}: {e}")
 
 
-def main(port=8000):
+def main(port=None, host=None):
+    """Run locally by default, or on a platform-provided public port."""
+    port = int(port if port is not None else os.environ.get("PORT", 8000))
+    host = host or os.environ.get("HOST", "0.0.0.0")
     print("  loading graph ...", flush=True)
     router()
-    srv = ThreadingHTTPServer(("0.0.0.0", port), Handler)
+    srv = ThreadingHTTPServer((host, port), Handler)
     # flush: serve_forever() blocks immediately after this, so an unflushed line
     # sits in the buffer and anything tailing the log never sees the server come up.
-    print(f"\n  ready -> http://0.0.0.0:{port}\n  ctrl-c to stop", flush=True)
+    print(f"\n  ready -> http://{host}:{port}\n  ctrl-c to stop", flush=True)
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
@@ -141,4 +145,4 @@ def main(port=8000):
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]) if len(sys.argv) > 1 else 8000)
+    main(int(sys.argv[1]) if len(sys.argv) > 1 else None)
